@@ -36,6 +36,22 @@ falkon --json roster
 
 `falkon --help` lists every command, and `falkon procedures` lists every API call you can make with `falkon call`.
 
+## Try it
+
+Once setup works, ask your agent things like these. The command after each one is what the agent runs.
+
+- "Who am I signed in as?" runs `falkon whoami`.
+- "Jaké máme turnusy?" runs `falkon terms list`.
+- "Show this year's přihlášky." runs `falkon applications list`.
+- "Who is on the roster for the first turnus?" runs `falkon roster --term <term-uuid>`.
+- "Show the season dashboard." runs `falkon dashboard`.
+- "Show the docházka for this week." runs `falkon attendance list`.
+- "What else can the API do?" runs `falkon procedures`.
+- "Mark this application as paid." runs `falkon applications set-payment <application-uuid> --status paid`.
+- "Check Anička in for Monday." runs `falkon attendance check-in <applicant-uuid> --term <term-uuid> --day mon`.
+
+The agent looks up the UUIDs itself. The last two change data, so the agent shows you the change and waits for your yes before it runs them.
+
 ## Be careful
 
 The CLI works on production data about children and their families. Anything it changes, it changes for real. The skill tells agents to show you each change and wait for your yes before they write anything. Read what your agent proposes before you agree.

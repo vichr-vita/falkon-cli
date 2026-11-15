@@ -126,8 +126,26 @@ Tell the user:
 
 Leave the token out of the report.
 
+## 7. Show the user what to try
+
+Once `falkon whoami` has succeeded, tell the user the setup worked and show them this list. Each line is something they can ask you, followed by the command it maps to. Show the list only; run none of these commands now. When the user later asks for one, find any UUID it needs yourself, with `falkon terms list` for terms and `falkon attendance list` for applicants.
+
+| Ask your agent | Command |
+| --- | --- |
+| "Who am I signed in as?" | `falkon whoami` |
+| "Jaké máme turnusy?" (Which terms do we have?) | `falkon terms list` |
+| "Show this year's přihlášky." | `falkon applications list` |
+| "Who is on the roster for the first turnus?" | `falkon roster --term <term-uuid>` |
+| "Show the season dashboard." | `falkon dashboard` |
+| "Show the docházka for this week." | `falkon attendance list` |
+| "What else can the API do?" | `falkon procedures` |
+| "Mark this application as paid." (changes data, asks you first) | `falkon applications set-payment <application-uuid> --status paid` |
+| "Check Anička in for Monday." (changes data, asks you first) | `falkon attendance check-in <applicant-uuid> --term <term-uuid> --day mon` |
+
+Tell the user that the last two change production data, so you will show them the exact change and wait for their yes before you run either one.
+
 ## What not to do
 
 - Never print, log, echo, or paste the token, and never `cat` the config file.
-- Never run a command that changes data during installation. `whoami` and `terms list` are the only Falkon commands this guide needs.
+- Never run a command that changes data during installation. `whoami` and `terms list` are the only Falkon commands this guide runs; step 7 shows the others without running them.
 - Leave the base URL at the production default unless the user gave you one.
