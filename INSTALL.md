@@ -47,7 +47,7 @@ If the installer warned that `~/.local/bin` is not on `PATH`, call the binary by
 
 ## 3. Write the config file
 
-If the user wrote the config file themselves, leave its content alone: run only the `ls -l` mode check at the end of this step, then go to step 4.
+If the user wrote the config file themselves, leave its content alone: run only the mode check at the end of this step, then go to step 4.
 
 Without a base URL from the user, the CLI uses production (`https://falkon.taborsokol.cz`), so the token is the only setting. Add `base_url` only when the user gave you another URL, such as staging (`https://staging-falkon.taborsokol.cz`).
 
@@ -75,7 +75,7 @@ base_url = "https://staging-falkon.taborsokol.cz"
 
 Use the file-writing tool, not `echo` or `printf` with the token in the shell. A command line ends up in shell history and in your transcript. If you have no file-writing tool, ask the user to paste the token into the file themselves.
 
-After writing, run `ls -l ~/.config/falkon/config.toml` and confirm the mode is `-rw-------`. An editor or a file-writing tool may recreate the file with mode `-rw-r--r--`. If the mode is anything other than `-rw-------`, run `chmod 600 ~/.config/falkon/config.toml` and check again. Do not print the file.
+After writing, run `stat -c %a ~/.config/falkon/config.toml` (macOS: `stat -f %Lp`) and confirm it prints `600`; `ls -l` shows the same mode as `-rw-------`, but some shells alias `ls` to a tool with a different layout. An editor or a file-writing tool may recreate the file with mode `-rw-r--r--`. If the mode is anything other than `600`, run `chmod 600 ~/.config/falkon/config.toml` and check again. Do not print the file.
 
 If the user prefers not to store the token in a file, they set `FALKON_API_TOKEN` themselves: `export FALKON_API_TOKEN=...` in their shell, or a user environment variable on Windows. Skip the file and tell them the variable must be set wherever `falkon` runs. Do not set it for them, since that puts the token on a command line.
 
@@ -86,6 +86,7 @@ The skill teaches you, and later sessions, how to use Falkon safely. It is the `
 Get it with git:
 
 ```sh
+cd "$(mktemp -d)"
 git clone --depth 1 https://github.com/vichr-vita/falkon-cli.git falkon-cli-src
 ```
 
